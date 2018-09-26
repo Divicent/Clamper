@@ -1,5 +1,3 @@
-# Clamper
-
 <h1>
 <img src="https://raw.githubusercontent.com/divicent/clamper/develop/media/logo/clamper_64.png" alt="Icon" width="64px"/>
 Clamper
