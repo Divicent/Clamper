@@ -1,0 +1,46 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+      <TargetFrameworks>net452;netstandard1.3;netstandard2.0</TargetFrameworks>
+      <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+      <Version>1.0.2</Version>
+      <Authors>Shanaka Rusith</Authors>
+      <Company />      
+      <Product>Clamper</Product>
+      <Description>This library provides core functionalities for data access layers generated using Clamper CLI</Description>
+      <Copyright>Shanaka Rusith</Copyright>
+      <PackageIconUrl>https://raw.githubusercontent.com/divicent/Clamper.Core/dev/images/Clamper_logo.256.png</PackageIconUrl>
+      <PackageProjectUrl>https://github.com/divicent/Clamper.Core</PackageProjectUrl>
+      <RepositoryUrl>https://github.com/divicent/Clamper.Core</RepositoryUrl>
+      <PackageTags>Clamper,core,dal,database</PackageTags>
+      <PackageReleaseNotes>* Added the Procedures property to the</PackageReleaseNotes>
+      <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+    <ItemGroup Condition="'$(TargetFramework)' == 'net452'">
+        <Reference Include="System" />
+        <Reference Include="System.Data" />
+        <Reference Include="System.Xml" />
+        <Reference Include="System.Xml.Linq" />
+        <Reference Include="Microsoft.CSharp" />
+        <PackageReference Include="MySql.Data" Version="6.10.6" />
+    </ItemGroup>
+    <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.3' OR '$(TargetFramework)' == 'netstandard2.0'">
+        <PackageReference Include="System.Data.SqlClient" Version="4.4.0" />
+        <PackageReference Include="System.Reflection.Emit.Lightweight" Version="4.3.0" />
+        <PackageReference Include="System.Reflection.TypeExtensions" Version="4.4.0" />
+        <PackageReference Include="Microsoft.CSharp" Version="4.4.1" />
+        <PackageReference Include="MySql.Data" Version="6.10.6" />
+    </ItemGroup>
+    <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.3' ">
+        <PackageReference Include="System.Collections.Concurrent" Version="4.3.0" />
+        <PackageReference Include="System.Collections.NonGeneric" Version="4.3.0" />
+        <PackageReference Include="System.Dynamic.Runtime" Version="4.3.0" />
+        <PackageReference Include="System.Reflection.Emit" Version="4.3.0" />
+        <PackageReference Include="System.Runtime.InteropServices" Version="4.3.0" />
+        <PackageReference Include="System.Xml.XmlDocument" Version="4.3.0" />
+        <PackageReference Include="Microsoft.CSharp" Version="4.4.1" />
+        <PackageReference Include="MySql.Data" Version="6.10.6" />
+    </ItemGroup>
+    <ItemGroup>
+      <PackageReference Include="System.ValueTuple" Version="4.3.0" />
+    </ItemGroup>
+</Project>

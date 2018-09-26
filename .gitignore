@@ -1,0 +1,6 @@
+bin
+obj
+.vscode
+/packages
+/.vs
+.idea
