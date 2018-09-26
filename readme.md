@@ -1,7 +1,7 @@
 # Clamper
 
 <h1>
-<img src="https://raw.githubusercontent.com/divicent/clamper/develop/media/logo/clamper_64.png" alt="Icon" width="200px"/>
+<img src="https://raw.githubusercontent.com/divicent/clamper/develop/media/logo/clamper_64.png" alt="Icon" width="64px"/>
 </h1>
 
 [![Build Status](https://travis-ci.org/Divicent/Clamper.svg?branch=develop)](https://travis-ci.org/Divicent/Clamper)
