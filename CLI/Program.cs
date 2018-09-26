@@ -8,7 +8,7 @@ namespace ClamperCLI
     {
         public static void Main(string[] args)
         {
-            var fileName = "ClamperSettings.json";
+            var fileName = "clamper.config.json";
             var output = new ProcessOutput();
             if (args.Length > 0)
             {
@@ -30,15 +30,16 @@ namespace ClamperCLI
             var path = $@"./{fileName}";
             
             Console.WriteLine(@"
-   ____                  _                       ____   _       ___ 
-  / ___|   ___   _ __   (_)   ___               / ___| | |     |_ _|
- | |  _   / _ \ | '_ \  | |  / _ \    _____    | |     | |      | | 
- | |_| | |  __/ | | | | | | |  __/   |_____|   | |___  | |___   | | 
-  \____|  \___| |_| |_| |_|  \___|              \____| |_____| |___|
+   ____ _                                            ____ _     ___ 
+  / ___| | __ _ _ __ ___  _ __   ___ _ __           / ___| |   |_ _|
+ | |   | |/ _` | '_ ` _ \| '_ \ / _ \ '__|  _____  | |   | |    | | 
+ | |___| | (_| | | | | | | |_) |  __/ |    |_____| | |___| |___ | | 
+  \____|_|\__,_|_| |_| |_| .__/ \___|_|             \____|_____|___|
+                         |_|                                        
 
                       -- Data Access Layer Generator --
 
-https://rusith.github.io/Clamper                      
+https://github.com/divicent/Clamper                      
                                                                ");
 
             var result = args.Contains("-s") ? Clamper.Base.Clamper.Generate(path) :

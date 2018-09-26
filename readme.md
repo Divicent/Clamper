@@ -42,11 +42,12 @@ Below is a very basic example configuration file that will direct ClamperCLI to 
 
 ```
 {
-    "connectionString": "Server=myServerAddress;Database=myDataBase;User Id=myUsername;
-Password=myPassword;",
+    "connectionString": "Server=myServerAddress;Database=myDataBase;User Id=myUsername;Password=myPassword;",
     "projectPath": "D://Projects/MyProjects",
     "baseNamespace": "MyProject",
-    "ProjectFile": "MyProject.DAL.csproj",
+    "ProjectFile": "MyProject.DAL.csproj"
+    "dbms": "MSSQL",
+    "schema": "dbo"
 }
 ```
 

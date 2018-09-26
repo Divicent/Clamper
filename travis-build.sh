@@ -13,7 +13,7 @@ if [ ! -z "$CLAMPER_VERSION" -a "$CLAMPER_VERSION" != " " ]; then
   dotnet restore
   printf "$CLAMPER_VERSION" > .version
   cd ..
-  dotnet publish GenieCLI -c release -r win10-x64
-  dotnet publish GenieCLI -c release -r ubuntu.16.10-x64
-  dotnet publish GenieCLI -c release -r osx-x64
+  dotnet publish ClamperCLI -c release -r win10-x64
+  dotnet publish ClamperCLI -c release -r ubuntu.16.10-x64
+  dotnet publish ClamperCLI -c release -r osx-x64
 fi
