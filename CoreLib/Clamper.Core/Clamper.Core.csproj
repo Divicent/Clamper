@@ -2,18 +2,19 @@
   <PropertyGroup>
       <TargetFrameworks>net452;netstandard1.3;netstandard2.0</TargetFrameworks>
       <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-      <Version>1.0.2</Version>
-      <Authors>Shanaka Rusith</Authors>
-      <Company />      
+      <Version>0.0.1</Version>
+      <Authors>Divicent</Authors>
+      <Company>Divicent</Company>      
       <Product>Clamper</Product>
       <Description>This library provides core functionalities for data access layers generated using Clamper CLI</Description>
-      <Copyright>Shanaka Rusith</Copyright>
-      <PackageIconUrl>https://raw.githubusercontent.com/divicent/Clamper.Core/dev/images/Clamper_logo.256.png</PackageIconUrl>
-      <PackageProjectUrl>https://github.com/divicent/Clamper.Core</PackageProjectUrl>
-      <RepositoryUrl>https://github.com/divicent/Clamper.Core</RepositoryUrl>
+      <Copyright>Divicent</Copyright>
+      <PackageIconUrl>https://raw.githubusercontent.com/divicent/clamper/develop/media/logo/clamper_256.png</PackageIconUrl>
+      <PackageProjectUrl>https://github.com/divicent/Clamper</PackageProjectUrl>
+      <RepositoryUrl>https://github.com/divicent/Clamper</RepositoryUrl>
       <PackageTags>Clamper,core,dal,database</PackageTags>
-      <PackageReleaseNotes>* Added the Procedures property to the</PackageReleaseNotes>
+      <PackageReleaseNotes>Initial Release</PackageReleaseNotes>
       <SignAssembly>true</SignAssembly>
+      <PackageId>ClamperCore</PackageId>
   </PropertyGroup>
     <ItemGroup Condition="'$(TargetFramework)' == 'net452'">
         <Reference Include="System" />

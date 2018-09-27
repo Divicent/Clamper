@@ -21,7 +21,7 @@ namespace Clamper.Templates.Infrastructure
             const string template =
 @"
 using System;
-using Clamper.Infrastructure.Interfaces;
+using Clamper.Core.Infrastructure.Interfaces;
 using {{baseNamespace}}.Infrastructure.Repositories.Abstract;
 using {{baseNamespace}}.Infrastructure.Repositories.Concrete;
 

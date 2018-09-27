@@ -29,7 +29,7 @@ namespace Clamper.Templates.Infrastructure
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Clamper.Infrastructure.Interfaces;
+using Clamper.Core.Infrastructure.Interfaces;
 namespace {{baseNamespace}}.Infrastructure
 {
     public static class ProcedureContainerExtensions

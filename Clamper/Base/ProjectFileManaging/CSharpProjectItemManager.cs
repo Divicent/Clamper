@@ -19,7 +19,7 @@ namespace Clamper.Base.ProjectFileManaging
     /// </summary>
     internal static class CSharpProjectItemManager
     {
-        private const string ClamperCoreVersion = "1.0.2";
+        private const string ClamperCoreVersion = "0.0.1";
 
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace Clamper.Base.ProjectFileManaging
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include=""Clamper"" Version=""${ClamperCoreVersion}"" />
+    <PackageReference Include=""ClamperCore"" Version=""${ClamperCoreVersion}"" />
   </ItemGroup>
 </Project>");
                     return;
@@ -78,7 +78,7 @@ namespace Clamper.Base.ProjectFileManaging
                     var packages = document.GetElementsByTagName("PackageReference");
                     var requiredPackages = new List<(string name, string version)>
                     {
-                        (name: "Clamper", version: ClamperCoreVersion)
+                        (name: "ClamperCore", version: ClamperCoreVersion)
                     };
 
                     var existingPackages = new List<(XmlNode node, string requiredVersion)>();
@@ -178,7 +178,7 @@ namespace Clamper.Base.ProjectFileManaging
                                 foreach (XmlNode packagesNodeChildNode in packagesNode.ChildNodes)
                                 {
                                     var id = packagesNodeChildNode.Attributes["id"]?.Value;
-                                    if (id != "Clamper")
+                                    if (id != "ClamperCore")
                                         continue;
                                     found = true;
                                     var version = packagesNode.Attributes["version"];
@@ -200,7 +200,7 @@ namespace Clamper.Base.ProjectFileManaging
                                     var newNode = packageDoc.CreateNode(XmlNodeType.Element, "package", null);
 
 
-                                    var id = XmlHelper.CreateAttribute(packageDoc, "id", "Clamper");
+                                    var id = XmlHelper.CreateAttribute(packageDoc, "id", "ClamperCore");
                                     var version = XmlHelper.CreateAttribute(packageDoc, "version", ClamperCoreVersion);
                                     newNode.Attributes.Append(id);
                                     newNode.Attributes.Append(version);
@@ -213,7 +213,7 @@ namespace Clamper.Base.ProjectFileManaging
                             {
                                 XmlHelper.Save(packageDoc, packageFile);
                             }
-                            output.WriteWarning($"Please run 'Install-Package Clamper -Version {ClamperCoreVersion}' on the target library if you have not installed the package.");
+                            output.WriteWarning($"Please run 'Install-Package ClamperCore -Version {ClamperCoreVersion}' on the target library if you have not installed the package.");
                         }
                         catch (Exception)
                         {
