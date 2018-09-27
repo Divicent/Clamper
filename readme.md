@@ -42,7 +42,7 @@ Below is a very basic example configuration file that will direct ClamperCLI to 
 
 This will create a .Net standard class library if the project file doesn't exist. if the project file exists it will modify it if necessary.
 
-```
+```C#
 {
   "connectionString":
     "Server=localhost;Database=myProject;UID=root;Password=password",
@@ -64,7 +64,7 @@ To start using the API,
 
 * You must create an `IDatabaseMetadataProvider` implementation which should be something like this
 
-```
+```C#
 using Clamper.Core.Infrastructure.Interfaces;
 
 public class DatabaseMetadataProvider : IDatabaseMetadataProvider
@@ -85,7 +85,7 @@ public class DatabaseMetadataProvider : IDatabaseMetadataProvider
 
 If you use a dependency container, you should add bindings like below
 
-```
+```C#
 Bind<IUnitOfWork>().To<UnitOfWork>();
 Bind<IDapperContext>().To<DapperContext>().InSingletonScope();
 ```
@@ -94,7 +94,7 @@ Bind<IDapperContext>().To<DapperContext>().InSingletonScope();
 
 Below is an example which retrieves list of items from a database
 
-```
+```C#
 IDBContext dbContext = new DBContext(new DatabaseMetadataProvider());
 var unit = dbContext.Unit();
 
