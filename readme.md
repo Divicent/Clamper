@@ -29,9 +29,6 @@ You can extract the downloaded package to anywhere in and add a the path to the 
 
 Download the new version and extract to the existing installation and replace existing files.
 
-
-# Basics
-
 ## How it works
 
 Basically it reads the configuration file in a folder, retrieves the metadata from the specified database in the configuration and creates a .Net library.
@@ -42,7 +39,7 @@ Below is a very basic example configuration file that will direct ClamperCLI to 
 
 This will create a .Net standard class library if the project file doesn't exist. if the project file exists it will modify it if necessary.
 
-```C#
+```JSON
 {
   "connectionString":
     "Server=localhost;Database=myProject;UID=root;Password=password",
