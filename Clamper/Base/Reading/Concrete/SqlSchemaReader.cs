@@ -35,7 +35,7 @@ namespace Clamper.Base.Reading.Concrete
             DatabaseSchema schema;
             try
             {
-                schema = ReadDatabase(configuration.ConnectionString);
+                schema = ReadDatabase(configuration.ConnectionString, configuration);
                 schema.BaseNamespace = configuration.BaseNamespace;
             }
             catch (Exception e)
@@ -61,7 +61,7 @@ namespace Clamper.Base.Reading.Concrete
             return schema;
         }
 
-        private DatabaseSchema ReadDatabase(string connectionString)
+        private DatabaseSchema ReadDatabase(string connectionString, IConfiguration configuration)
         {
             var databaseSchemaColumns = new List<DatabaseSchemaColumn>();
             var databaseParameters = new List<DatabaseParameter>();
@@ -109,12 +109,20 @@ namespace Clamper.Base.Reading.Concrete
                     databaseSchemaColumns = filtered;
                 }
 
-                var commandToGetParameters = GetCommand(
-                    QueryToGetParameters, connection, transaction);
-
-                using (var reader = commandToGetParameters.ExecuteReader())
+                if (!string.IsNullOrWhiteSpace(QueryToGetParameters))
                 {
-                    while (reader.Read()) databaseParameters.Add(ReadParameter(reader));
+                    var commandToGetParameters = GetCommand(
+                        QueryToGetParameters, connection, transaction);
+
+                    using (var reader = commandToGetParameters.ExecuteReader())
+                    {
+                        while (reader.Read()) databaseParameters.Add(ReadParameter(reader));
+                    }
+
+                }
+                else
+                {
+                    databaseParameters.AddRange(GetAllProcedureParameters(connection, configuration));
                 }
 
                 if (!string.IsNullOrWhiteSpace(QueryToGetExtendedProperties))
@@ -397,5 +405,6 @@ namespace Clamper.Base.Reading.Concrete
         protected abstract ExtendedPropertyInfo ReadExtendedProperty(IDataReader reader);
         protected abstract string GetEnumValueQuery(IConfiguration configuration, IConfigurationEnumTable enumTable);
         protected abstract void ProcessProcedureParameters(IStoredProcedure storedProcedure);
+        protected abstract List<DatabaseParameter> GetAllProcedureParameters(IDbConnection connection, IConfiguration configuration);
     }
 }

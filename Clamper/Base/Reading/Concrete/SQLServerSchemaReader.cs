@@ -1,6 +1,6 @@
 ﻿#region Usings
 
-using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -44,6 +44,11 @@ namespace Clamper.Base.Reading.Concrete
 
             storedProcedure.ParamString = parameterString.TrimEnd(',');
             storedProcedure.PassString = $"{{ {parameterPassString.TrimEnd(',')} }}" ;
+        }
+
+        protected override List<DatabaseParameter> GetAllProcedureParameters(IDbConnection connection, IConfiguration configuration)
+        {
+            return null;
         }
 
         protected override DatabaseSchemaColumn ReadColumn(IDataReader reader)
