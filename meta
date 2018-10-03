@@ -10,3 +10,7 @@ Clamper uses the Dapper Micro ORM to map the result sets. this makes the mapping
 
 Clamper is being developed keeping the best practices in mind. you can integrate the generated code easily as it exposes a layer of abstraction to the upper layers.
 }}
+
+{{ image
+https://raw.githubusercontent.com/divicent/clamper/develop/media/logo/clamper_64.png
+}}
