@@ -1,0 +1,12 @@
+{{ badges
+<a href="https://travis-ci.org/Divicent/Clamper"><img src="https://travis-ci.org/Divicent/Clamper.svg?branch=develop" alt="Build Status" /></a>
+<a href="https://app.codacy.com/app/rusith/Clamper?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Divicent/Clamper&amp;utm_campaign=Badge_Grade_Dashboard"><img src="https://api.codacy.com/project/badge/Grade/328b02683cf54fe1ba675f8cd56cb5f5" alt="Codacy Badge" /></a>
+}}
+
+{{ description
+Clamper is a tool which can generate a library that can be used to access a database. the generated library has an optimized, rich API that can be used to do all kind of operations on a relational database without writing any SQL.
+
+Clamper uses the Dapper Micro ORM to map the result sets. this makes the mapping high efficient. Clamper can generate libraries for .Net Framework and .Net core. the generated library has the API to access the database and it references the Clamper.Core library from Nuget. the Core library has all infrastructure that is necessary the generated library to work.
+
+Clamper is being developed keeping the best practices in mind. you can integrate the generated code easily as it exposes a layer of abstraction to the upper layers.
+}}
