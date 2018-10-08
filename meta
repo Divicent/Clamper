@@ -1,6 +1,6 @@
 {{ badges
-{ "href": "https://travis-ci.org/Divicent/Clamper", "img": { { "src": "https://travis-ci.org/Divicent/Clamper.svg?branch=develop" alt="Build Status" } } }
-{ "href": "https://app.codacy.com/app/rusith/Clamper?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Divicent/Clamper&amp;utm_campaign=Badge_Grade_Dashboard", "img": { { "src": "https://api.codacy.com/project/badge/Grade/328b02683cf54fe1ba675f8cd56cb5f5" alt="Codacy Badge" } } }
+{ "href": "https://travis-ci.org/Divicent/Clamper", "img": { { "src": "https://travis-ci.org/Divicent/Clamper.svg?branch=develop" "alt"="Build Status" } } }
+{ "href": "https://app.codacy.com/app/rusith/Clamper?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Divicent/Clamper&amp;utm_campaign=Badge_Grade_Dashboard", "img": { { "src": "https://api.codacy.com/project/badge/Grade/328b02683cf54fe1ba675f8cd56cb5f5" "alt":"Codacy Badge" } } }
 }}
 
 {{ description
