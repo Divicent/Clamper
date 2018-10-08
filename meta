@@ -5,7 +5,9 @@
 
 {{ description
 Clamper is a tool which can generate a library that can be used to access a database. the generated library has an optimized, rich API that can be used to do all kind of operations on a relational database without writing any SQL.
+
 Clamper uses the Dapper Micro ORM to map the result sets. this makes the mapping high efficient. Clamper can generate libraries for .Net Framework and .Net core. the generated library has the API to access the database and it references the Clamper.Core library from Nuget. the Core library has all infrastructure that is necessary the generated library to work.
+
 Clamper is being developed keeping the best practices in mind. you can integrate the generated code easily as it exposes a layer of abstraction to the upper layers.
 }}
 
