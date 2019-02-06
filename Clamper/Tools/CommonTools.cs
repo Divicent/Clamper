@@ -20,7 +20,8 @@ namespace Clamper.Tools
             "decimal",
             "float",
             "bool",
-            "DateTime"
+            "DateTime",
+            "System.Guid"
         };
 
         public static string GetCSharpDataType(string dataType, bool nullable)
@@ -39,9 +40,6 @@ namespace Clamper.Tools
             {
                 case "int":
                     return type;
-                case "numeric":
-                case "decimal":
-                    return "decimal";
                 case "datetime2":
                 case "datetime":
                 case "timestamp":
@@ -58,6 +56,7 @@ namespace Clamper.Tools
                 case "text":
                 case "enum":
                 case "set":
+                case "uniqueidentifier":
                     return "string";
                 case "bit":
                     return "bool";
@@ -72,6 +71,11 @@ namespace Clamper.Tools
                     return "float";
                 case "double":
                     return "double";
+                case "smallmoney":
+                case "money":
+                case "numeric":
+                case "decimal":
+                    return "decimal";
                 default:
                     return "";
             }
