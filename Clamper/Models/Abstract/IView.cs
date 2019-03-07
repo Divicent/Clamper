@@ -16,6 +16,8 @@ namespace Clamper.Models.Abstract
       /// </summary>
       string Name { get; set; }
 
+      string Schema { get; set; }
+
       /// <summary>
       ///     List of attributes (resulting columns) of the view
       /// </summary>

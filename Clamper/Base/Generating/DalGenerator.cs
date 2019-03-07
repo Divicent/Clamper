@@ -58,7 +58,7 @@ namespace Clamper.Base.Generating
                         new ModelColumnSelectorTemplate(@"", relation),
                         new ModelFilterContextTemplate("", relation.Name, attributes),
                         new ModelOrderContextTemplate("", relation.Name, attributes),
-                        new ModelQueryContextTemplate("", relation.Name, attributes, configuration),
+                        new ModelQueryContextTemplate("", relation.Name, relation.Schema, attributes, configuration),
                         new RelationTemplate("", relation, schema.Enums.FirstOrDefault(e => e.Name == $"{relation.Name}Enum"), configuration),
                         new IRepositoryTemplate("", relation),
                         new RepositoryTemplate("", relation)

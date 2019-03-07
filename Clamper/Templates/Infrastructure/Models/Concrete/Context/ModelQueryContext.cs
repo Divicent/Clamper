@@ -16,11 +16,13 @@ namespace Clamper.Templates.Infrastructure.Models.Concrete.Context
         private readonly List<ISimpleAttribute> _attributes;
         private readonly IConfiguration _configuration;
         private readonly string _name;
+        private readonly string _schema;
 
-        public ModelQueryContextTemplate(string path, string name, List<ISimpleAttribute> attributes,
+        public ModelQueryContextTemplate(string path, string schema, string name, List<ISimpleAttribute> attributes,
             IConfiguration configuration) : base(path)
         {
             _name = name;
+            _schema = schema;
             _attributes = attributes;
             _configuration = configuration;
         }
@@ -208,7 +210,7 @@ namespace Clamper.Templates.Infrastructure.Models.Concrete.Context
             return Process(nameof(ModelQueryContextTemplate), template, new
             {
                 name = _name,
-                schemaQuoted = quote(_configuration.Schema),
+                schemaQuoted = quote(_schema),
                 nameQuoted = quote(_name),
                 cases = cases.ToString(),
                 dateCases = dateCases.ToString(),

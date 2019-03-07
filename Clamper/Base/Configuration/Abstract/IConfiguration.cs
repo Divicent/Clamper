@@ -56,10 +56,6 @@ namespace Clamper.Base.Configuration.Abstract
         /// </summary>
         string DBMS { get; set; }
 
-        /// <summary>
-        ///     Default database schema name
-        /// </summary>
-        string Schema { get; }
 
         /// <summary>
         ///     Optional Location to generate abstract models

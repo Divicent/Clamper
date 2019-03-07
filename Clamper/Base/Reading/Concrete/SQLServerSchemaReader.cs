@@ -121,11 +121,11 @@ namespace Clamper.Base.Reading.Concrete
                   ON rct.CONSTRAINT_NAME = rc.UNIQUE_CONSTRAINT_NAME AND rct.CONSTRAINT_SCHEMA = c.TABLE_SCHEMA
                 LEFT OUTER JOIN INFORMATION_SCHEMA.CONSTRAINT_COLUMN_USAGE rcuc
                   ON rc.UNIQUE_CONSTRAINT_NAME = rcuc.CONSTRAINT_NAME  AND rcuc.CONSTRAINT_SCHEMA = c.TABLE_SCHEMA
-            WHERE t.TABLE_SCHEMA = '{configuration.Schema}'
+            WHERE t.TABLE_CATALOG = '$databaseName$'
             ORDER BY c.TABLE_NAME, c.ORDINAL_POSITION";
 
 
-            QueryToGetParameters = $@"
+            QueryToGetParameters = @"
                     SELECT 
                         p.SPECIFIC_NAME AS SP
 	                    ,p.PARAMETER_NAME AS [Name]
@@ -133,7 +133,7 @@ namespace Clamper.Base.Reading.Concrete
                     FROM INFORMATION_SCHEMA.PARAMETERS p
 	                    INNER JOIN INFORMATION_SCHEMA.ROUTINES r
 		                    ON p.SPECIFIC_NAME = r.SPECIFIC_NAME
-                    WHERE r.ROUTINE_TYPE = 'PROCEDURE' AND p.SPECIFIC_SCHEMA = '{configuration.Schema}'
+                    WHERE r.ROUTINE_TYPE = 'PROCEDURE' AND p.SPECIFIC_CATALOG = '$databaseName$'
                     ORDER BY p.SCOPE_NAME , p.ORDINAL_POSITION";
 
 
@@ -146,7 +146,7 @@ namespace Clamper.Base.Reading.Concrete
                     INNER JOIN sys.extended_properties ep ON ep.major_id = oo.object_id 
                     LEFT JOIN sys.schemas s on oo.schema_id = s.schema_id
                     INNER JOIN sys.columns AS col ON ep.major_id = col.object_id AND ep.minor_id = col.column_id
-                    WHERE s.[name] = '{configuration.Schema}' AND ep.[value] IS NOT NULL AND ep.[value] <> ''";
+                    WHERE ep.[value] IS NOT NULL AND ep.[value] <> ''";
         }
     }
 }

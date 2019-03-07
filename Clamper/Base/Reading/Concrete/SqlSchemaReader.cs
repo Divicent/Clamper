@@ -72,7 +72,7 @@ namespace Clamper.Base.Reading.Concrete
                 connection.Open();
                 var transaction = connection.BeginTransaction();
 
-                var commandToGetColumns = GetCommand(QueryToReadColumns, connection, transaction);
+                var commandToGetColumns = GetCommand(QueryToReadColumns.Replace("$databaseName$", connection.Database), connection, transaction);
 
                 using (var reader = commandToGetColumns.ExecuteReader())
                 {
@@ -110,7 +110,7 @@ namespace Clamper.Base.Reading.Concrete
                 }
 
                 var commandToGetParameters = GetCommand(
-                    QueryToGetParameters, connection, transaction);
+                    QueryToGetParameters.Replace("$databaseName$", connection.Database), connection, transaction);
 
                 using (var reader = commandToGetParameters.ExecuteReader())
                 {

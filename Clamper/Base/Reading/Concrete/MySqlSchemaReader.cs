@@ -30,7 +30,7 @@ namespace Clamper.Base.Reading.Concrete
         {
             return $"SELECT `{configurationEnumTable.NameColumn}` AS `Name`," +
                    $"       `{configurationEnumTable.ValueColumn}` AS `Value`" +
-                   $" FROM `{configuration.Schema}`.`{configurationEnumTable.Table}`";
+                   $" FROM `{configurationEnumTable.Table}`";
         }
 
         protected override void ProcessProcedureParameters(IStoredProcedure storedProcedure)
@@ -134,10 +134,10 @@ namespace Clamper.Base.Reading.Concrete
                     ON t.TABLE_NAME = rcuc.TABLE_NAME AND c.COLUMN_NAME = rcuc.COLUMN_NAME
                     AND fkc.CONSTRAINT_NAME = rcuc.CONSTRAINT_NAME
                     AND c.TABLE_SCHEMA = rcuc.TABLE_SCHEMA AND c.TABLE_SCHEMA = rcuc.REFERENCED_TABLE_SCHEMA
-            WHERE c.TABLE_SCHEMA = '{configuration.Schema}'
+            WHERE c.TABLE_CATALOG = '$databaseName$'
             ORDER BY c.TABLE_NAME, c.ORDINAL_POSITION";
 
-            QueryToGetParameters = $@"
+            QueryToGetParameters = @"
                     SELECT 
                         p.SPECIFIC_NAME AS `SP`
 	                    ,p.PARAMETER_NAME AS `Name`
@@ -146,7 +146,7 @@ namespace Clamper.Base.Reading.Concrete
                     FROM INFORMATION_SCHEMA.PARAMETERS p
 	                    INNER JOIN INFORMATION_SCHEMA.ROUTINES r
 		                    ON p.SPECIFIC_NAME = r.SPECIFIC_NAME
-                    WHERE r.ROUTINE_TYPE = 'PROCEDURE' AND p.SPECIFIC_SCHEMA = '{configuration.Schema}'
+                    WHERE r.ROUTINE_TYPE = 'PROCEDURE' AND p.SPECIFIC_CATALOG = '$databaseName$'
                     ORDER BY p.ORDINAL_POSITION";
 
             /*
