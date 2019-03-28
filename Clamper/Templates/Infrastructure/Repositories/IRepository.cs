@@ -50,7 +50,7 @@ namespace Clamper.Templates.Infrastructure.Repositories
                 /// Remove an object of {{name}} using the values of its primary key(s)
                 /// </summary>
 {{relation.keyCommentString}}
-                void RemoveByKey({{relation.keyString}});
+                void RemoveByKey({{relation.keyStringRemove}});
 {% endif %}
             }
 ";

@@ -195,7 +195,8 @@ namespace Clamper.Base.Reading.Concrete
                             Attributes = new List<IAttribute>(),
                             ForeignKeyAttributes = new List<IForeignKeyAttribute>(),
                             ReferenceLists = new List<IReferenceList>(),
-                            Comment = RemoveNewLines(databaseSchemaColumn.TableComment)
+                            Comment = RemoveNewLines(databaseSchemaColumn.TableComment),
+                            Schema = databaseSchemaColumn.Schema,
                         };
 
                         tables.Add(table);
@@ -249,6 +250,7 @@ namespace Clamper.Base.Reading.Concrete
                                 "_" + (databaseSchemaColumn.TableName.First() + "").ToLower() +
                                 databaseSchemaColumn.TableName.Substring(1),
                             Name = databaseSchemaColumn.TableName,
+                            Schema = databaseSchemaColumn.Schema,
                             Attributes = new List<ISimpleAttribute>()
                         };
 

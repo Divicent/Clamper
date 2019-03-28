@@ -29,18 +29,18 @@ namespace Clamper.Templates.Infrastructure.Models.Concrete
             const string template =
 @"
 {% if hasEnum %}
-            	public sealed class {{enam.Name}}
+                public sealed class {{enam.Name}}
                 {
-		            private readonly {{enam.Type}} _value;
-		            private {{enam.Name}}({{enam.Type}} value)
-	                {
-	                    _value = value;
-	                }
+                    private readonly {{enam.Type}} _value;
+                    private {{enam.Name}}({{enam.Type}} value)
+                    {
+                        _value = value;
+                    }
 
-		            public static implicit operator {{enam.Type}}({{enam.Name}} @enum)
-	                {
-	                    return @enum._value;
-	                }
+                    public static implicit operator {{enam.Type}}({{enam.Name}} @enum)
+                    {
+                        return @enum._value;
+                    }
                     
 {% for key in enam.Values %}
                     private static {{enam.Name}} {{key.FieldName}};
@@ -59,7 +59,7 @@ namespace Clamper.Templates.Infrastructure.Models.Concrete
 
 
 {% if abstractModelsEnabled %}
-		            public {{name}}() { }
+                    public {{name}}() { }
         
                     public {{name}}(I{{name}} model) 
                     {
@@ -75,22 +75,22 @@ namespace Clamper.Templates.Infrastructure.Models.Concrete
 {% endfor %}
 
 {% for atd in relation.ForeignKeyAttributes %}
-		            private {{atd.ReferencingRelationName}} {{atd.ReferencingNonForeignKeyAttribute.FieldName}}Obj;
+                    private {{atd.ReferencingRelationName}} {{atd.ReferencingNonForeignKeyAttribute.FieldName}}Obj;
 {% endfor %}
 
 {% for atd in relation.ForeignKeyAttributes %}
-            		/// <summary>
-		            /// Get {{atd.ReferencingRelationName}} object from {{atd.ReferencingNonForeignKeyAttribute.Name}} value.<para />This object will be cache within this instance.
-		            /// </summary>
-		            public {{atd.ReferencingRelationName}} Get{{atd.ReferencingNonForeignKeyAttribute.Name}}(IDbTransaction transaction =null)
+                    /// <summary>
+                    /// Get {{atd.ReferencingRelationName}} object from {{atd.ReferencingNonForeignKeyAttribute.Name}} value.<para />This object will be cache within this instance.
+                    /// </summary>
+                    public {{atd.ReferencingRelationName}} Get{{atd.ReferencingNonForeignKeyAttribute.Name}}(IDbTransaction transaction =null)
                     {
                         return __DatabaseUnitOfWork != null ? {{atd.ReferencingNonForeignKeyAttribute.FieldName}}Obj ?? ({{atd.ReferencingNonForeignKeyAttribute.FieldName}}Obj = __DatabaseUnitOfWork.{{atd.ReferencingRelationName}}Repository().Get().Where.{{atd.ReferencingTableColumnName}}.EqualsTo({{atd.ReferencingNonForeignKeyAttribute.FieldName}}{{atd.Fix}}).Filter().Top(1).FirstOrDefault(transaction)) : null;
                     }
         
                     /// <summary>
-		            /// Get {{atd.ReferencingRelationName}} object from {{atd.ReferencingNonForeignKeyAttribute.Name}} value asynchronously .<para />This object will be cache within this instance.
-		            /// </summary>
-		            public async Task<{{atd.ReferencingRelationName}}> Get{{atd.ReferencingNonForeignKeyAttribute.Name}}Async(IDbTransaction transaction =null)
+                    /// Get {{atd.ReferencingRelationName}} object from {{atd.ReferencingNonForeignKeyAttribute.Name}} value asynchronously .<para />This object will be cache within this instance.
+                    /// </summary>
+                    public async Task<{{atd.ReferencingRelationName}}> Get{{atd.ReferencingNonForeignKeyAttribute.Name}}Async(IDbTransaction transaction =null)
                     {
                         return __DatabaseUnitOfWork != null ? {{atd.ReferencingNonForeignKeyAttribute.FieldName}}Obj ?? ({{atd.ReferencingNonForeignKeyAttribute.FieldName}}Obj = await __DatabaseUnitOfWork.{{atd.ReferencingRelationName}}Repository().Get().Where.{{atd.ReferencingTableColumnName}}.EqualsTo({{atd.ReferencingNonForeignKeyAttribute.FieldName}}{{atd.Fix}}).Filter().Top(1).FirstOrDefaultAsync(transaction)) : null;
                     }
@@ -99,23 +99,23 @@ namespace Clamper.Templates.Infrastructure.Models.Concrete
 {% for atd in relation.Attributes %}
 {% if atd.HasComment %}
                     /// <summary>
-		            /// {{atd.Comment}}
-		            /// </summary>
+                    /// {{atd.Comment}}
+                    /// </summary>
 {% endif %}
 {% if atd.IsKey %}
-		            [Key]
+                    [Key]
 {% endif %}
 {% if atd.IsIdentity %}
-		            [Identity]
+                    [Identity]
 {% endif %}
-		            public {{atd.DataType}} {{atd.Name}} { get { return {{atd.FieldName}}; } set { if({{atd.FieldName}} == value ) { return; }  {{atd.FieldName}} = value; __Updated(""{{atd.Name}}""); {{atd.RefPropNameNull}} } }
+                    public {{atd.DataType}} {{atd.Name}} { get { return {{atd.FieldName}}; } set { if({{atd.FieldName}} == value ) { return; }  {{atd.FieldName}} = value; __Updated(""{{atd.Name}}""); {{atd.RefPropNameNull}} } }
 {% endfor %}
 
 {% for atd in relation.ForeignKeyAttributes %}
-                	/// <summary>
-		            /// Set {{atd.ReferencingRelationName}} object for {{atd.ReferencingNonForeignKeyAttribute.Name}} value. <para />This will also change the {{atd.ReferencingNonForeignKeyAttribute.Name}} value.
-		            /// </summary>
-		            public void Set{{atd.ReferencingNonForeignKeyAttribute.Name}}({{atd.ReferencingRelationName}} entity)
+                    /// <summary>
+                    /// Set {{atd.ReferencingRelationName}} object for {{atd.ReferencingNonForeignKeyAttribute.Name}} value. <para />This will also change the {{atd.ReferencingNonForeignKeyAttribute.Name}} value.
+                    /// </summary>
+                    public void Set{{atd.ReferencingNonForeignKeyAttribute.Name}}({{atd.ReferencingRelationName}} entity)
                     {
                         if (entity == null)
                             return;
@@ -130,17 +130,17 @@ namespace Clamper.Templates.Infrastructure.Models.Concrete
                                 entity.__ActionsToRunWhenAdding.Add(new AddAction(i => { {{atd.ReferencingNonForeignKeyAttribute.Name}} = (({{atd.ReferencingRelationName}}) i).{{atd.ReferencingTableColumnName}}; }, entity));
                                 break;
                             case ModelStatus.JustInMemory:
-	                        case ModelStatus.Deleted:
-		                        break;
-	                        default:
-		                        break;
+                            case ModelStatus.Deleted:
+                                break;
+                            default:
+                                break;
                         }
                     }
 {% endfor %}
 
 {% for list in relation.ReferenceLists %}
-		            public IReferencedEntityCollection<{{list.ReferencedRelationName}}> {{list.ReferencedRelationNamePlural}}WhereThisIs{{list.ReferencedPropertyName}}(IDbTransaction transaction = null ){  return new ReferencedEntityCollection<{{list.ReferencedRelationName}}>(__DatabaseUnitOfWork.{{list.ReferencedRelationName}}Repository().Get().Where.{{list.ReferencedPropertyName}}.EqualsTo({{list.ReferencedPropertyOnThisRelation}}).Filter().Query(transaction), (i) => { (({{list.ReferencedRelationName}})i).{{list.ReferencedPropertyName}} = {{list.ReferencedPropertyOnThisRelation}};}, this); }
-		            public async Task<IReferencedEntityCollection<{{list.ReferencedRelationName}}>> {{list.ReferencedRelationNamePlural}}WhereThisIs{{list.ReferencedPropertyName}}Async(IDbTransaction transaction = null ){  return new ReferencedEntityCollection<{{list.ReferencedRelationName}}>(await __DatabaseUnitOfWork.{{list.ReferencedRelationName}}Repository().Get().Where.{{list.ReferencedPropertyName}}.EqualsTo({{list.ReferencedPropertyOnThisRelation}}).Filter().QueryAsync(transaction), (i) => { (({{list.ReferencedRelationName}})i).{{list.ReferencedPropertyName}} = {{list.ReferencedPropertyOnThisRelation}}; }, this); }
+                    public IReferencedEntityCollection<{{list.ReferencedRelationName}}> {{list.ReferencedRelationNamePlural}}WhereThisIs{{list.ReferencedPropertyName}}(IDbTransaction transaction = null ){  return new ReferencedEntityCollection<{{list.ReferencedRelationName}}>(__DatabaseUnitOfWork.{{list.ReferencedRelationName}}Repository().Get().Where.{{list.ReferencedPropertyName}}.EqualsTo({{list.ReferencedPropertyOnThisRelation}}).Filter().Query(transaction), (i) => { (({{list.ReferencedRelationName}})i).{{list.ReferencedPropertyName}} = {{list.ReferencedPropertyOnThisRelation}};}, this); }
+                    public async Task<IReferencedEntityCollection<{{list.ReferencedRelationName}}>> {{list.ReferencedRelationNamePlural}}WhereThisIs{{list.ReferencedPropertyName}}Async(IDbTransaction transaction = null ){  return new ReferencedEntityCollection<{{list.ReferencedRelationName}}>(await __DatabaseUnitOfWork.{{list.ReferencedRelationName}}Repository().Get().Where.{{list.ReferencedPropertyName}}.EqualsTo({{list.ReferencedPropertyOnThisRelation}}).Filter().QueryAsync(transaction), (i) => { (({{list.ReferencedRelationName}})i).{{list.ReferencedPropertyName}} = {{list.ReferencedPropertyOnThisRelation}}; }, this); }
 {% endfor %}
 
                     public override void SetId(object id)
@@ -162,10 +162,10 @@ namespace Clamper.Templates.Infrastructure.Models.Concrete
                         {{k.FieldName}} = Convert.ToInt64(id);
     {% endif %}
     {% if k.DataType contains 'DateTime'%}
-		                {{k.FieldName}} = Convert.ToDateTime(id);
+                        {{k.FieldName}} = Convert.ToDateTime(id);
     {% endif %}
     {% if k.DataType contains 'bool'%}
-		                {{k.FieldName}} = Convert.ToBoolean(id);
+                        {{k.FieldName}} = Convert.ToBoolean(id);
     {% endif %}
 {% endfor %}
                     }
@@ -179,7 +179,7 @@ namespace Clamper.Templates.Infrastructure.Models.Concrete
             {
                 hasEnum = _enum != null && _enum.Values.Count > 0,
                 enam = _enum,
-                quotedSchema = quote(_configuration.Schema),
+                quotedSchema = quote(_relation.Schema),
                 quotedName = quote(name),
                 name,
                 absImplement = _configuration.AbstractModelsEnabled ? $", I{name}" : "",

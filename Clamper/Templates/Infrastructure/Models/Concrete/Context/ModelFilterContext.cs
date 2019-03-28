@@ -32,7 +32,7 @@ namespace Clamper.Templates.Infrastructure.Models.Concrete.Context
 {% if atd.DataType == 'string' %}
                     private IStringFilter<I{{name}}FilterContext, I{{name}}QueryContext> {{atd.FieldName}};
 {% endif %}
-{% if atd.DataType contains 'int' or atd.DataType contains 'double' or atd.DataType contains 'decimal' or atd.DataType contains 'long' %}
+{% if atd.DataType contains 'int' or atd.DataType contains 'double' or atd.DataType contains 'decimal' or atd.DataType contains 'long' or atd.DataType contains 'short' %}
                     private INumberFilter<I{{name}}FilterContext, I{{name}}QueryContext> {{atd.FieldName}};
 {% endif %}
 {% if atd.DataType contains 'DateTime'%}
@@ -50,7 +50,7 @@ namespace Clamper.Templates.Infrastructure.Models.Concrete.Context
 {% if atd.DataType == 'string' %}
                     public IStringFilter<I{{name}}FilterContext, I{{name}}QueryContext> {{atd.Name}} { get { return {{atd.FieldName}} ?? ( {{atd.FieldName}} = new StringFilter<I{{name}}FilterContext, I{{name}}QueryContext>(""{{atd.Name}}"", this, _queryContext)); } }
 {% endif %}
-{% if atd.DataType contains 'int' or atd.DataType contains 'double' or atd.DataType contains 'decimal' or atd.DataType contains 'long' %}
+{% if atd.DataType contains 'int' or atd.DataType contains 'double' or atd.DataType contains 'decimal' or atd.DataType contains 'long' or atd.DataType contains 'short' %}
 		            public INumberFilter<I{{name}}FilterContext, I{{name}}QueryContext> {{atd.Name}} { get { return {{atd.FieldName}} ?? ( {{atd.FieldName}} = new NumberFilter<I{{name}}FilterContext, I{{name}}QueryContext>(""{{atd.Name}}"", this, _queryContext)); } }
 {% endif %}
 {% if atd.DataType contains 'DateTime'%}

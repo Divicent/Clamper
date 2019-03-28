@@ -15,5 +15,6 @@ namespace Clamper.Base.Reading.Concrete.Models
         public string ReferencedTableName { get; set; }
         public string ReferencedColumnName { get; set; }
         public bool IsIdentity { get; set; }
+        public string Schema { get; set; }
     }
 }

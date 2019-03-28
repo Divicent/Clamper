@@ -52,13 +52,14 @@ namespace Clamper.Base.Generating
                     files.Add(new ObjectTemplate($"Infrastructure/Models/{relation.Name}", configuration,
                         new IModelColumnSelectorTemplate("", relation),
                         new IModelFilterContextTemplate("", relation.Name, attributes),
+
                         new IModelOrderContextTemplate("", relation.Name, attributes),
                         new IModelQueryContextTemplate("", relation.Name),
 
                         new ModelColumnSelectorTemplate(@"", relation),
                         new ModelFilterContextTemplate("", relation.Name, attributes),
                         new ModelOrderContextTemplate("", relation.Name, attributes),
-                        new ModelQueryContextTemplate("", relation.Name, relation.Schema, attributes, configuration),
+                        new ModelQueryContextTemplate("", relation.Schema, relation.Name, attributes, configuration),
                         new RelationTemplate("", relation, schema.Enums.FirstOrDefault(e => e.Name == $"{relation.Name}Enum"), configuration),
                         new IRepositoryTemplate("", relation),
                         new RepositoryTemplate("", relation)
@@ -79,8 +80,8 @@ namespace Clamper.Base.Generating
                         new ModelColumnSelectorTemplate(@"", view),
                         new ModelFilterContextTemplate("", view.Name, attributes),
                         new ModelOrderContextTemplate("", view.Name, attributes),
-                        new ModelQueryContextTemplate("", view.Name, attributes, configuration),
-                        new ViewTemplate("", view, configuration), 
+                        new ModelQueryContextTemplate("", view.Schema, view.Name, attributes, configuration),
+                        new ViewTemplate("", view, configuration),
                         new IRepositoryTemplate("", view),
                         new RepositoryTemplate("", view)
 

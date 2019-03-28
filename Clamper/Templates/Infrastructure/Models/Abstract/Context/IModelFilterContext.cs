@@ -36,7 +36,7 @@ namespace Clamper.Templates.Infrastructure.Models.Abstract.Context
 {% if atd.DataType == 'string' %}
                     IStringFilter<I{{name}}FilterContext,I{{name}}QueryContext> {{atd.Name}} { get; }
 {% endif %}
-{% if atd.DataType contains 'int' or atd.DataType contains 'double' or atd.DataType contains 'decimal' or atd.DataType contains 'long' %}
+{% if atd.DataType contains 'int' or atd.DataType contains 'double' or atd.DataType contains 'decimal' or atd.DataType contains 'long' or atd.DataType contains 'short' %}
                     INumberFilter<I{{name}}FilterContext,I{{name}}QueryContext> {{atd.Name}} { get; }
 {% endif %}
 {% if atd.DataType contains 'DateTime'%}

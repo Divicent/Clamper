@@ -11,6 +11,12 @@ namespace Clamper.Models.Abstract
         IEnumerable<ISimpleAttribute> GetAttributes();
 
         /// <summary>
+        /// Schema of the model
+        /// </summary>
+        string Schema { get; set; }
+
+
+        /// <summary>
         ///     Get name of the model
         /// </summary>
         /// <returns></returns>

@@ -16,10 +16,7 @@ namespace Clamper.Models.Abstract
         /// </summary>
         string Name { get; set; }
 
-        /// <summary>
-        /// Schema of the relation
-        /// </summary>
-        string Schema { get; set; }
+
 
         /// <summary>
         /// List of attributes (columns) of the relation

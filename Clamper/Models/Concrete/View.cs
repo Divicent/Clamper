@@ -14,6 +14,7 @@ namespace Clamper.Models.Concrete
         public string FieldName { get; set; }
         public string Name { get; set; }
         public List<ISimpleAttribute> Attributes { get; set; }
+        public string Schema { get; set; }
 
         public IEnumerable<ISimpleAttribute> GetAttributes()
         {

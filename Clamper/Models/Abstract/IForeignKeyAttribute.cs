@@ -1,7 +1,7 @@
 ﻿namespace Clamper.Models.Abstract
 {
     /// <summary>
-    ///     Represents a foreign key attribute of a relation
+    /// Represents a foreign key attribute of a relation
     /// </summary>
     public interface IForeignKeyAttribute
     {
@@ -19,5 +19,6 @@
         ///     The column that is referred in the foreign table
         /// </summary>
         string ReferencingTableColumnName { get; set; }
+
     }
 }

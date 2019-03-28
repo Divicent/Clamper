@@ -44,13 +44,22 @@ namespace Clamper.Models.Concrete
             var keys  = Attributes.Where(a => a.IsKey).ToList();
             var hasKeys = keys.Count > 0;
             var keyString = "";
+            var keyStringRemove = "";
             var keyCommentString = "";
             var keyGetter = "";
             var removeKeys = "";
             if (hasKeys)
             {
-                keyString = keys.Aggregate("", (c, n) => c + ", " + n.DataType + " " + n.Name.ToLower())
-                    .TrimStart(',').TrimStart(' ');
+                
+                keyString = keys.Aggregate("", (c, n) => {
+                    var dataType = n.DataType;
+                    if (dataType == "decimal" || dataType == "short")
+                        dataType = "double";
+
+                    return c + ", " + dataType + " " + n.Name.ToLower();
+                }).TrimStart(',').TrimStart(' ');
+
+                keyStringRemove = keys.Aggregate("", (c, n) => c + ", " + n.DataType + " " + n.Name.ToLower()).TrimStart(',').TrimStart(' ');
                 keyCommentString = keys.Aggregate("", (c, n) => c +
                                                                 $@"            /// <param name=""{n.Name.ToLower()}"">Value for primary key {n.Name}</param>");
 
@@ -68,6 +77,7 @@ namespace Clamper.Models.Concrete
                 FieldName,
                 Comment,
                 keyString,
+                keyStringRemove,
                 keyCommentString,
                 keyGetter,
                 removeKeys,

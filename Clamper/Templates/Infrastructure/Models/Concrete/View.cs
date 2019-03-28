@@ -29,7 +29,7 @@ namespace Clamper.Templates.Infrastructure.Models.Concrete
                 {
 
 {% if abstractModelsEnabled %}
-		            public {{name}}() { }
+                    public {{name}}() { }
         
                     public {{name}}(I{{name}} model) 
                     {
@@ -43,11 +43,11 @@ namespace Clamper.Templates.Infrastructure.Models.Concrete
 
 {% for atd in attributes %}
 {% if atd.HasComment %}
-		            /// <summary>
-		            /// {atd.Comment}
-		            /// </summary>
+                    /// <summary>
+                    /// {atd.Comment}
+                    /// </summary>
 {% endif %}
-		            public {{atd.DataType}} {{atd.Name}} { get; set; }
+                    public {{atd.DataType}} {{atd.Name}} { get; set; }
 {% endfor %}
                 }
 ";
@@ -58,7 +58,7 @@ namespace Clamper.Templates.Infrastructure.Models.Concrete
             return Process(nameof(ViewTemplate), template, new
             {
                 name = _view.Name,
-                quotedSchema = quote(_configuration.Schema),
+                quotedSchema = quote(_view.Schema),
                 quotedName = quote(_view.Name),
                 abstractModelsEnabled = _configuration.AbstractModelsEnabled,
                 absImplement = _configuration.AbstractModelsEnabled ? $": I{_view.Name}" : "",

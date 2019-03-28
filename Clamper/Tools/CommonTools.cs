@@ -57,6 +57,7 @@ namespace Clamper.Tools
                 case "enum":
                 case "set":
                 case "uniqueidentifier":
+                case "xml":
                     return "string";
                 case "bit":
                     return "bool";
@@ -76,6 +77,8 @@ namespace Clamper.Tools
                 case "numeric":
                 case "decimal":
                     return "decimal";
+                case "image":
+                    return "byte[]";
                 default:
                     return "";
             }

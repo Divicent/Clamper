@@ -9,7 +9,6 @@ using Clamper.Base.Exceptions;
 
 #endregion
 
-
 namespace Clamper.Base.Configuration.Concrete
 {
     /// <inheritdoc />
@@ -18,13 +17,11 @@ namespace Clamper.Base.Configuration.Concrete
     /// </summary>
     public class ClamperConfiguration : IConfiguration, ILiquidizable
     {
-
         public string ConnectionString { get; set; }
         public string ProjectPath { get; set; }
         public string BaseNamespace { get; set; }
         public List<ConfigurationEnumTable> Enums { get; set; }
         public string DBMS { get; set; }
-        public string Schema { get; set; }
         public string ProjectFile { get; set; }
         public string AbstractModelsLocation { get; set; }
         public string AbstractModelsNamespace { get; set; }
@@ -49,8 +46,6 @@ namespace Clamper.Base.Configuration.Concrete
             if (string.IsNullOrWhiteSpace(DBMS))
                 error.AppendLine("DBMS (dbms in JSON) not found in the configuration file");
 
-            if (string.IsNullOrWhiteSpace(Schema))
-                error.AppendLine("Schema (schema in JSON) not found in the configuration file");
             else
                 switch (DBMS.ToLowerInvariant())
                 {
@@ -90,7 +85,6 @@ namespace Clamper.Base.Configuration.Concrete
                 BaseNamespace,
                 Enums,
                 DBMS,
-                Schema,
                 ProjectFile,
                 AbstractModelsNamespace,
                 AbstractModelsLocation,

@@ -56,7 +56,6 @@ namespace Clamper.Base
 
             IConfiguration config = null;
             IFileSystem fileSystem = new ClamperFileSystem();
-           // IVersionManager versionManager = new ClamperVersionManager(fileSystem);
             try
             {
                 if (!fileSystem.Exists(pathToConfigurationJsonFile))

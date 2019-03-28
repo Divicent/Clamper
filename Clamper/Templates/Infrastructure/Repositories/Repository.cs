@@ -37,7 +37,7 @@ namespace Clamper.Templates.Infrastructure.Repositories
                     return await Get().Where{{relation.keyGetter}}.Filter().FirstOrDefaultAsync();
                 }
 
-                public void RemoveByKey({{relation.keyString}})
+                public void RemoveByKey({{relation.keyStringRemove}})
                 {
                     Remove(new Models.Concrete.{{name}}
                     {

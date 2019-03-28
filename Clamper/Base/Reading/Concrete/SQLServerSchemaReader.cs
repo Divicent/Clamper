@@ -1,6 +1,7 @@
 ﻿#region Usings
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -27,20 +28,41 @@ namespace Clamper.Base.Reading.Concrete
         }
 
         protected override string GetEnumValueQuery(IConfiguration configuration,
-            IConfigurationEnumTable configurationEnumTable)
+            IConfigurationEnumTable enumTable)
         {
-            return $"SELECT [{configurationEnumTable.NameColumn}] AS [Name]," +
-                   $"       [{configurationEnumTable.ValueColumn}] AS [Value]" +
-                   $" FROM [dbo].[{configurationEnumTable.Table}]";
+            return $"SELECT [{enumTable.NameColumn}] AS [Name]," +
+                   $"       [{enumTable.ValueColumn}] AS [Value]" +
+                   $" FROM [dbo].[{enumTable.Table}]";
         }
 
         protected override void ProcessProcedureParameters(IStoredProcedure storedProcedure)
         {
-            var parameterString = storedProcedure.Parameters.Aggregate("", (current, param) => current +
-                                                                                               $"{CommonTools.GetCSharpDataType(param.DataType, true)} {param.Name.Replace("@", "")} = null" +
-                                                                                               ",");
-            var parameterPassString = storedProcedure.Parameters.Aggregate("", (current, param) => 
-                $"{current} {param.Name.Replace("@", "")},");
+            var addedNames = new List<string>();
+            var parameterString = storedProcedure.Parameters.Aggregate("", (current, param) => {
+
+                if (addedNames.Contains(param.Name))
+                    return current;
+                else addedNames.Add(param.Name);
+                var dataType = CommonTools.GetCSharpDataType(param.DataType, true);
+
+                // Sometimes it can be a table type
+                if (dataType.Length < 1)
+                    dataType = "object";
+
+                return current + $"{dataType} {param.Name.Replace("@", "")} = null" + ",";
+
+            });
+
+            addedNames = new List<string>();
+
+            var parameterPassString = storedProcedure.Parameters.Aggregate("", (current, param) => {
+
+                if (addedNames.Contains(param.Name))
+                    return current;
+                else addedNames.Add(param.Name);
+
+                return $"{current} {param.Name.Replace("@", "")},";
+            });
 
             storedProcedure.ParamString = parameterString.TrimEnd(',');
             storedProcedure.PassString = $"{{ {parameterPassString.TrimEnd(',')} }}" ;
@@ -48,18 +70,17 @@ namespace Clamper.Base.Reading.Concrete
 
         protected override DatabaseSchemaColumn ReadColumn(IDataReader reader)
         {
-            var column = new DatabaseSchemaColumn
-            {
-                Name = reader.GetString(0),
-                TableFullName = reader.GetString(1),
-                TableName = reader.GetString(2),
-                Type = reader.GetString(3),
-                Nullable = reader.GetString(4) == "YES",
-                DataType = reader.GetString(5),
-                IsPrimaryKey = reader.GetInt32(6) == 1,
-                IsForeignKey = reader.GetInt32(7) == 1,
-                IsIdentity = reader.GetInt32(8) == 1
-            };
+            var column = new DatabaseSchemaColumn();
+            column.Name = reader.GetString(0);
+            column.TableFullName = reader.GetString(1);
+            column.TableName = reader.GetString(2);
+            column.Type = reader.GetString(3);
+            column.Nullable = reader.GetString(4) == "YES";
+            column.DataType = reader.GetString(5);
+            column.IsPrimaryKey = reader.GetInt32(6) == 1;
+            column.IsForeignKey = reader.GetInt32(7) == 1;
+            column.IsIdentity = reader.GetInt32(8) == 1;
+            column.Schema = reader.GetString(11);
 
             if (column.IsForeignKey)
             {
@@ -83,19 +104,26 @@ namespace Clamper.Base.Reading.Concrete
 
         protected override DatabaseParameter ReadParameter(IDataReader reader)
         {
-            return new DatabaseParameter
+            var parameter = new DatabaseParameter
             {
                 Procedure = reader.GetString(0),
                 Name = reader.GetString(1),
                 DataType = reader.GetString(2)
             };
+
+            if (char.IsDigit(parameter.Procedure[0]))
+            {
+                parameter.Procedure = $"Sp{parameter.Procedure}";
+            }
+
+            return parameter;
         }
 
         internal override void Setup(IConfiguration configuration)
         {
             QueryToReadColumns = $@"
                        SELECT 
-	            c.COLUMN_NAME AS [Name]
+                c.COLUMN_NAME AS [Name]
                ,'[' + t.TABLE_SCHEMA + ']' + '.[' + t.TABLE_NAME + ']' AS [TableFullName]
                ,t.TABLE_Name [TableName]
                ,t.TABLE_TYPE  AS TableType
@@ -106,6 +134,7 @@ namespace Clamper.Base.Reading.Concrete
                ,ISNULL(COLUMNPROPERTY(object_id('[' + t.TABLE_SCHEMA + ']' + '.[' + t.TABLE_NAME + ']'), c.COLUMN_NAME, 'IsIdentity'), 0) AS IsIdentity
                ,rct.TABLE_NAME AS ReferencedTableName
                ,rcuc.COLUMN_NAME AS ReferencedColumn
+               ,t.TABLE_SCHEMA AS [Schema]
             FROM INFORMATION_SCHEMA.COLUMNS c
                 INNER JOIN INFORMATION_SCHEMA.TABLES t
                   ON c.TABLE_NAME = t.TABLE_NAME AND t.TABLE_SCHEMA = c.TABLE_SCHEMA
@@ -118,30 +147,32 @@ namespace Clamper.Base.Reading.Concrete
                 LEFT OUTER JOIN INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS rc
                   ON fkc.CONSTRAINT_NAME = rc.CONSTRAINT_NAME AND rc.CONSTRAINT_SCHEMA = c.TABLE_SCHEMA
                 LEFT OUTER JOIN INFORMATION_SCHEMA.TABLE_CONSTRAINTS rct
-                  ON rct.CONSTRAINT_NAME = rc.UNIQUE_CONSTRAINT_NAME AND rct.CONSTRAINT_SCHEMA = c.TABLE_SCHEMA
+                  ON rct.CONSTRAINT_NAME = rc.UNIQUE_CONSTRAINT_NAME
                 LEFT OUTER JOIN INFORMATION_SCHEMA.CONSTRAINT_COLUMN_USAGE rcuc
-                  ON rc.UNIQUE_CONSTRAINT_NAME = rcuc.CONSTRAINT_NAME  AND rcuc.CONSTRAINT_SCHEMA = c.TABLE_SCHEMA
+                  ON rc.UNIQUE_CONSTRAINT_NAME = rcuc.CONSTRAINT_NAME
             WHERE t.TABLE_CATALOG = '$databaseName$'
             ORDER BY c.TABLE_NAME, c.ORDINAL_POSITION";
 
 
             QueryToGetParameters = @"
-                    SELECT 
+                    SELECT DISTINCT
                         p.SPECIFIC_NAME AS SP
-	                    ,p.PARAMETER_NAME AS [Name]
-	                    ,p.DATA_TYPE AS DataType
+                        ,p.PARAMETER_NAME AS [Name]
+                        ,p.DATA_TYPE AS DataType
+                        ,p.SCOPE_NAME
+                        ,p.ORDINAL_POSITION
                     FROM INFORMATION_SCHEMA.PARAMETERS p
-	                    INNER JOIN INFORMATION_SCHEMA.ROUTINES r
-		                    ON p.SPECIFIC_NAME = r.SPECIFIC_NAME
+                        INNER JOIN INFORMATION_SCHEMA.ROUTINES r
+                            ON p.SPECIFIC_NAME = r.SPECIFIC_NAME
                     WHERE r.ROUTINE_TYPE = 'PROCEDURE' AND p.SPECIFIC_CATALOG = '$databaseName$'
                     ORDER BY p.SCOPE_NAME , p.ORDINAL_POSITION";
 
 
             QueryToGetExtendedProperties = $@"SELECT
-	                     s.[name] AS SchemaName
-	                    ,oo.[name] AS ObjectName
-	                    ,col.[name] AS ColumnName
-	                    ,ep.[value] AS Property
+                         s.[name] AS SchemaName
+                        ,oo.[name] AS ObjectName
+                        ,col.[name] AS ColumnName
+                        ,ep.[value] AS Property
                         FROM sys.all_objects oo 
                     INNER JOIN sys.extended_properties ep ON ep.major_id = oo.object_id 
                     LEFT JOIN sys.schemas s on oo.schema_id = s.schema_id
